@@ -1,6 +1,6 @@
 schedule:
   day: Tuesday
-  time_utc: "08:20"   # 9:00am UTC+8
+  time_utc: "08:31"   # 9:00am UTC+8
 
 search_queries:
   - "UX design government digital services public sector 2026"
