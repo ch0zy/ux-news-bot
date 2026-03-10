@@ -3,10 +3,10 @@ schedule:
   time_utc: "01:00"   # 9:00am UTC+8
 
 search_queries:
-  - "UX design government digital services public sector 2026"
-  - "AI tools UX research experimental design Claude"
-  - "UX design research new tools trends 2026"
+  - "government digital services, service design, public sector 2026"
+  - "new trends, tools, Claude Code use cases for UX design and UX research 2026"
+  - "experimental design 2026"
 
-results_per_query: 5          # Tavily returns up to 5 per query → 15 total → top 10
-max_articles: 10
+results_per_query: 4          # Tavily returns up to 4 per query → 12 total → top 8
+max_articles: 8
 summary_max_words: 20
