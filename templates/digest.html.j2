@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UX Weekly Digest — Week of {{ week_date }}</title>
+  <style>
+    body { margin: 0; padding: 0; background-color: #f4f4f7; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; }
+    .wrapper { max-width: 680px; margin: 0 auto; padding: 24px 16px; }
+    .header { background-color: #1a1a2e; color: #ffffff; padding: 28px 32px; border-radius: 8px 8px 0 0; text-align: center; }
+    .header h1 { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: 0.5px; }
+    .header p { margin: 6px 0 0; font-size: 13px; color: #a0aec0; }
+    .one-liner { background-color: #eef2ff; border-left: 4px solid #4f46e5; padding: 16px 20px; margin: 0; font-size: 15px; color: #3730a3; font-style: italic; line-height: 1.6; }
+    .card-grid { display: table; width: 100%; border-spacing: 0; }
+    .card-row { display: table-row; }
+    .card-cell { display: table-cell; width: 50%; padding: 8px; vertical-align: top; }
+    .card { background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.08); height: 100%; }
+    .card-img { width: 100%; height: 150px; object-fit: cover; display: block; background-color: #e2e8f0; }
+    .card-img-placeholder { width: 100%; height: 150px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: block; }
+    .card-body { padding: 16px; }
+    .card-title { margin: 0 0 8px; font-size: 14px; font-weight: 600; line-height: 1.4; }
+    .card-title a { color: #1a202c; text-decoration: none; }
+    .card-title a:hover { color: #4f46e5; }
+    .card-summary { margin: 0 0 10px; font-size: 13px; color: #4a5568; line-height: 1.5; }
+    .card-date { font-size: 11px; color: #a0aec0; }
+    .footer { background-color: #f8fafc; border-top: 1px solid #e2e8f0; padding: 20px 32px; text-align: center; font-size: 12px; color: #718096; border-radius: 0 0 8px 8px; }
+    .footer a { color: #4f46e5; text-decoration: none; }
+    @media only screen and (max-width: 540px) {
+      .card-cell { display: block; width: 100%; padding: 6px 0; }
+      .card-grid, .card-row { display: block; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <!-- Header -->
+    <div class="header">
+      <h1>UX Weekly Digest</h1>
+      <p>Week of {{ week_date }}</p>
+    </div>
+
+    <!-- One-liner banner -->
+    <div class="one-liner">{{ one_liner }}</div>
+
+    <!-- Article cards -->
+    <div style="background-color:#ffffff; padding: 16px;">
+      <table class="card-grid" cellpadding="0" cellspacing="0" width="100%">
+        {% for i in range(0, articles|length, 2) %}
+        <tr class="card-row">
+          {% for article in articles[i:i+2] %}
+          <td class="card-cell">
+            <div class="card">
+              {% if article.thumbnail_url %}
+                <img class="card-img" src="{{ article.thumbnail_url }}" alt="" />
+              {% else %}
+                <div class="card-img-placeholder"></div>
+              {% endif %}
+              <div class="card-body">
+                <p class="card-title"><a href="{{ article.url }}">{{ article.title }}</a></p>
+                <p class="card-summary">{{ article.summary }}</p>
+                {% if article.published_date %}
+                  <p class="card-date">{{ article.published_date }}</p>
+                {% endif %}
+              </div>
+            </div>
+          </td>
+          {% endfor %}
+          {% if articles[i:i+2]|length == 1 %}
+          <td class="card-cell"></td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      You're receiving this because you're on the UX Weekly Digest list.<br>
+      To unsubscribe, contact <a href="mailto:{{ sender_email | default('the admin') }}">the admin</a>.
+    </div>
+  </div>
+</body>
+</html>
