@@ -3,10 +3,10 @@ schedule:
   time_utc: "01:00"   # 9:00am UTC+8
 
 search_queries:
-  - "new trends, tools, and AI use cases for UX design and UX research 2026"
-  - "experimental graphic and interactive design 2026"
-  - "service design case studies in public sector 2026"
+  - "new trends, tools, and AI use cases for UX design and UX research"
+  - "experimental graphic and interactive design"
+  - "government digital services, design in public sector"
 
-results_per_query: 4          # Tavily returns up to 4 per query → 12 total → top 8
+results_per_query: 3          # Tavily returns up to 3 per query → 9 total → top 8
 max_articles: 8
 summary_max_words: 10
