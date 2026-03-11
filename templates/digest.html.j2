@@ -4,27 +4,56 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UX Weekly Digest — Week of {{ week_date }}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    body { margin: 0; padding: 0; background-color: #f4f4f7; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; }
+    /* Zero Foundation — body background: bgOverlay (#F2F5F5) */
+    body { margin: 0; padding: 0; background-color: #F2F5F5; font-family: 'Lexend', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; }
     .wrapper { max-width: 680px; margin: 0 auto; padding: 24px 16px; }
-    .header { background-color: #1a1a2e; color: #ffffff; padding: 28px 32px; border-radius: 8px 8px 0 0; text-align: center; }
-    .header h1 { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: 0.5px; }
-    .header p { margin: 6px 0 0; font-size: 13px; color: #a0aec0; }
-    .one-liner { background-color: #eef2ff; border-left: 4px solid #4f46e5; padding: 16px 20px; margin: 0; font-size: 15px; color: #3730a3; font-style: italic; line-height: 1.6; }
+
+    /* Header — ZDS primary (gb-teal-60) */
+    .header { background-color: #03727D; color: #ffffff; padding: 28px 32px; border-radius: 8px 8px 0 0; text-align: center; }
+    .header h1 { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.4px; }
+    .header p { margin: 6px 0 0; font-size: 13px; color: #9FCED3; font-weight: 300; } /* gb-teal-30 */
+
+    /* One-liner banner — ZDS primarySubtle (gb-teal-10) with teal-60 accent border */
+    .one-liner { background-color: #E9F4F5; border-left: 4px solid #03727D; padding: 16px 20px; margin: 0; font-size: 15px; color: #02545D; font-style: italic; line-height: 1.6; font-weight: 300; }
+
+    /* Card grid */
     .card-grid { display: table; width: 100%; border-spacing: 0; }
     .card-row { display: table-row; }
     .card-cell { display: table-cell; width: 50%; padding: 8px; vertical-align: top; }
-    .card { background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.08); height: 100%; }
-    .card-img { width: 100%; height: 150px; object-fit: cover; display: block; background-color: #e2e8f0; }
-    .card-img-placeholder { width: 100%; height: 150px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: block; }
+
+    /* Cards — ZDS surface with borderLighter (#DEE1E7) */
+    .card { background-color: #ffffff; border-radius: 8px; overflow: hidden; border: 1px solid #DEE1E7; height: 100%; }
+    .card-img { width: 100%; height: 150px; object-fit: cover; display: block; background-color: #E9F4F5; }
+
+    /* Placeholder — teal gradient (gb-teal-50 → gb-teal-80) */
+    .card-img-placeholder {
+      width: 100%;
+      height: 150px;
+      background: linear-gradient(135deg, #2D949E 0%, #013D43 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Card body */
     .card-body { padding: 16px; }
     .card-title { margin: 0 0 8px; font-size: 14px; font-weight: 600; line-height: 1.4; }
-    .card-title a { color: #1a202c; text-decoration: none; }
-    .card-title a:hover { color: #4f46e5; }
-    .card-summary { margin: 0 0 10px; font-size: 13px; color: #4a5568; line-height: 1.5; }
-    .card-date { font-size: 11px; color: #a0aec0; }
-    .footer { background-color: #f8fafc; border-top: 1px solid #e2e8f0; padding: 20px 32px; text-align: center; font-size: 12px; color: #718096; border-radius: 0 0 8px 8px; }
-    .footer a { color: #4f46e5; text-decoration: none; }
+    .card-title a { color: #13151A; text-decoration: none; } /* typeHeaderDark */
+    .card-title a:hover { color: #03727D; } /* primary (gb-teal-60) */
+    .card-summary { margin: 0 0 10px; font-size: 13px; color: #444C5D; line-height: 1.5; font-weight: 400; } /* typeBodyLight */
+    .card-date { font-size: 11px; color: #6BB3BA; letter-spacing: 0.04em; font-weight: 500; } /* gb-teal-40 */
+
+    /* Footer — ZDS bgSubtle (gb-teal-10) with teal-20 border */
+    .footer { background-color: #E9F4F5; border-top: 1px solid #CEE6E8; padding: 20px 32px; text-align: center; font-size: 12px; color: #444C5D; border-radius: 0 0 8px 8px; font-weight: 400; }
+    .footer a { color: #03727D; text-decoration: none; } /* primary */
+
+    /* ZDS scrollbar */
+    ::-webkit-scrollbar       { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #CEE6E8; border-radius: 2px; }
+
     @media only screen and (max-width: 540px) {
       .card-cell { display: block; width: 100%; padding: 6px 0; }
       .card-grid, .card-row { display: block; }
@@ -53,7 +82,37 @@
               {% if article.thumbnail_url %}
                 <img class="card-img" src="{{ article.thumbnail_url }}" alt="" />
               {% else %}
-                <div class="card-img-placeholder"></div>
+                <!-- Gradient placeholder with pixel monster (ZDS teal-50 → teal-80) -->
+                <div class="card-img-placeholder">
+                  <svg width="56" height="56" viewBox="0 0 8 8" xmlns="http://www.w3.org/2000/svg" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+                    <!-- Antennae -->
+                    <rect x="1" y="0" width="1" height="1" fill="#E9F4F5"/>
+                    <rect x="6" y="0" width="1" height="1" fill="#E9F4F5"/>
+                    <!-- Antenna stems -->
+                    <rect x="2" y="1" width="1" height="1" fill="#9FCED3"/>
+                    <rect x="5" y="1" width="1" height="1" fill="#9FCED3"/>
+                    <!-- Head row -->
+                    <rect x="1" y="2" width="6" height="1" fill="#CEE6E8"/>
+                    <!-- Eyes row — white eye highlights on teal body -->
+                    <rect x="0" y="3" width="2" height="1" fill="#CEE6E8"/>
+                    <rect x="2" y="3" width="1" height="1" fill="#ffffff"/>
+                    <rect x="3" y="3" width="2" height="1" fill="#CEE6E8"/>
+                    <rect x="5" y="3" width="1" height="1" fill="#ffffff"/>
+                    <rect x="6" y="3" width="2" height="1" fill="#CEE6E8"/>
+                    <!-- Body row -->
+                    <rect x="0" y="4" width="8" height="1" fill="#CEE6E8"/>
+                    <!-- Mouth row -->
+                    <rect x="1" y="5" width="1" height="1" fill="#9FCED3"/>
+                    <rect x="3" y="5" width="2" height="1" fill="#9FCED3"/>
+                    <rect x="6" y="5" width="1" height="1" fill="#9FCED3"/>
+                    <!-- Outer legs -->
+                    <rect x="0" y="6" width="1" height="1" fill="#E9F4F5"/>
+                    <rect x="7" y="6" width="1" height="1" fill="#E9F4F5"/>
+                    <!-- Feet -->
+                    <rect x="1" y="7" width="1" height="1" fill="#E9F4F5"/>
+                    <rect x="6" y="7" width="1" height="1" fill="#E9F4F5"/>
+                  </svg>
+                </div>
               {% endif %}
               <div class="card-body">
                 <p class="card-title"><a href="{{ article.url }}">{{ article.title }}</a></p>
