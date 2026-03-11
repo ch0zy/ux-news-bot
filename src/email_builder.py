@@ -37,7 +37,7 @@ if __name__ == "__main__":
     html = build_email(
         one_liner="This week: AI, government UX, and the future of design research.",
         articles=sample_articles,
-        week_date="March 10, 2026",
+        week_date="10 March 2026",
     )
     out = Path(__file__).parent.parent / "preview.html"
     out.write_text(html)
