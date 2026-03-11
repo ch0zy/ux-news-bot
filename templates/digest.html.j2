@@ -1,142 +1,265 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UX Weekly Digest — Week of {{ week_date }}</title>
-  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gobby UX Weekly Digest — {{ week_date }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    /* Zero Foundation — body background: bgOverlay (#F2F5F5) */
-    body { margin: 0; padding: 0; background-color: #F2F5F5; font-family: 'Lexend', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; }
-    .wrapper { max-width: 680px; margin: 0 auto; padding: 24px 16px; }
+    /* ── Zero Foundation — gb-teal token palette ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #01181B; /* gb-teal-100 */
+      font-family: 'Lexend', Arial, sans-serif;
+      color: #9FCED3; /* gb-teal-30 */
+      -webkit-font-smoothing: antialiased;
+    }
 
-    /* Header — ZDS primary (gb-teal-60) */
-    .header { background-color: #03727D; color: #ffffff; padding: 28px 32px; border-radius: 8px 8px 0 0; text-align: center; }
-    .header h1 { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.4px; }
-    .header p { margin: 6px 0 0; font-size: 13px; color: #9FCED3; font-weight: 300; } /* gb-teal-30 */
+    /* ── Email wrapper ── */
+    .email-wrapper { max-width: 680px; margin: 0 auto; background-color: #01181B; }
 
-    /* One-liner banner — ZDS primarySubtle (gb-teal-10) with teal-60 accent border */
-    .one-liner { background-color: #E9F4F5; border-left: 4px solid #03727D; padding: 16px 20px; margin: 0; font-size: 15px; color: #02545D; font-style: italic; line-height: 1.6; font-weight: 300; }
+    /* ── Header ── */
+    .email-header {
+      background-color: #01282C; /* gb-teal-90 */
+      border-top: 3px solid #03727D; /* gb-teal-60 */
+      padding: 28px 16px 14px;
+      box-shadow: 0 2px 20px rgba(3, 114, 125, 0.3);
+    }
+    .email-header-inner {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .email-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .email-title-dot { color: #03727D; }
+    .email-date {
+      font-size: 13px;
+      font-weight: 400;
+      color: #6BB3BA; /* gb-teal-40 */
+      white-space: nowrap;
+    }
 
-    /* Card grid */
-    .card-grid { display: table; width: 100%; border-spacing: 0; }
-    .card-row { display: table-row; }
-    .card-cell { display: table-cell; width: 50%; padding: 8px; vertical-align: top; }
+    /* ── Body content area ── */
+    .email-body { background-color: #01282C; padding: 16px; }
 
-    /* Cards — ZDS surface with borderLighter (#DEE1E7) */
-    .card { background-color: #ffffff; border-radius: 8px; overflow: hidden; border: 1px solid #DEE1E7; height: 100%; }
-    .card-img { width: 100%; height: 150px; object-fit: cover; display: block; background-color: #E9F4F5; }
+    /* ── One-liner banner ── */
+    .one-liner {
+      background-color: #01282C;
+      border-left: 4px solid #2D949E; /* gb-teal-50 */
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      border-radius: 0 6px 6px 0;
+    }
+    .one-liner p {
+      font-size: 13px;
+      font-style: italic;
+      color: #9FCED3;
+      line-height: 1.6;
+    }
 
-    /* Placeholder — teal gradient (gb-teal-50 → gb-teal-80) */
-    .card-img-placeholder {
+    /* ── Section heading ── */
+    .section-heading {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #2D949E;
+      padding: 0 0 10px 2px;
+      border-bottom: 1px solid rgba(3, 114, 125, 0.2);
+      margin-bottom: 14px;
+    }
+
+    /* ── Article grid: 2-column table ── */
+    .article-grid {
+      width: calc(100% + 20px);
+      border-collapse: separate;
+      border-spacing: 10px;
+      margin: 0 -10px;
+    }
+    .article-grid td { vertical-align: top; width: 50%; padding: 0; }
+    .grid-spacer { height: 10px; }
+
+    /* ── Article card — entire card is a link ── */
+    a.card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      background-color: #013D43; /* gb-teal-80 */
+      border: 1px solid rgba(3, 114, 125, 0.3);
+      border-radius: 8px;
+      overflow: hidden;
+      height: 100%;
+      cursor: pointer;
+      transition: border-color 0.15s ease, background-color 0.15s ease;
+    }
+    a.card:hover {
+      border-color: rgba(3, 114, 125, 0.7);
+      background-color: #014a52;
+    }
+
+    /* ── Thumbnail (real image) ── */
+    .card-img { width: 100%; height: 120px; object-fit: cover; display: block; }
+
+    /* ── Thumbnail placeholder (no image) ── */
+    .card-thumbnail {
       width: 100%;
-      height: 150px;
-      background: linear-gradient(135deg, #2D949E 0%, #013D43 100%);
+      height: 120px;
+      background: linear-gradient(160deg, #02545D 0%, #01181B 100%);
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
     }
+    .card-thumbnail::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(3,114,125,0.18) 0%, transparent 70%);
+    }
+    .card-thumbnail svg { position: relative; z-index: 1; opacity: 0.9; }
 
-    /* Card body */
-    .card-body { padding: 16px; }
-    .card-title { margin: 0 0 8px; font-size: 14px; font-weight: 600; line-height: 1.4; }
-    .card-title a { color: #13151A; text-decoration: none; } /* typeHeaderDark */
-    .card-title a:hover { color: #03727D; } /* primary (gb-teal-60) */
-    .card-summary { margin: 0 0 10px; font-size: 13px; color: #444C5D; line-height: 1.5; font-weight: 400; } /* typeBodyLight */
-    .card-date { font-size: 11px; color: #6BB3BA; letter-spacing: 0.04em; font-weight: 500; } /* gb-teal-40 */
+    /* ── Card content ── */
+    .card-content { padding: 14px 15px 16px; display: flex; flex-direction: column; gap: 8px; }
+    .card-date { font-size: 11px; font-weight: 400; color: #6BB3BA; letter-spacing: 0.02em; }
+    .card-title { font-size: 14px; font-weight: 600; color: #E9F4F5; line-height: 1.4; letter-spacing: -0.01em; }
+    a.card:hover .card-title { color: #9FCED3; }
+    .card-summary { font-size: 13px; font-weight: 400; color: #9FCED3; line-height: 1.6; }
 
-    /* Footer — ZDS bgSubtle (gb-teal-10) with teal-20 border */
-    .footer { background-color: #E9F4F5; border-top: 1px solid #CEE6E8; padding: 20px 32px; text-align: center; font-size: 12px; color: #444C5D; border-radius: 0 0 8px 8px; font-weight: 400; }
-    .footer a { color: #03727D; text-decoration: none; } /* primary */
+    /* ── Footer ── */
+    .email-footer {
+      background-color: #01181B;
+      border-top: 1px solid rgba(3, 114, 125, 0.3);
+      padding: 24px 32px;
+      text-align: center;
+    }
+    .footer-brand { font-size: 13px; font-weight: 600; color: #6BB3BA; margin-bottom: 10px; letter-spacing: -0.01em; }
+    .footer-copy { font-size: 11px; color: #6BB3BA; opacity: 0.7; line-height: 1.6; }
+    .footer-unsubscribe { margin-top: 10px; font-size: 11px; }
+    .footer-unsubscribe a {
+      color: #2D949E;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      transition: color 0.15s ease;
+    }
+    .footer-unsubscribe a:hover { color: #6BB3BA; }
 
-    /* ZDS scrollbar */
+    /* ── ZDS scrollbar ── */
     ::-webkit-scrollbar       { width: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #CEE6E8; border-radius: 2px; }
 
     @media only screen and (max-width: 540px) {
-      .card-cell { display: block; width: 100%; padding: 6px 0; }
-      .card-grid, .card-row { display: block; }
+      .article-grid, .article-grid tbody, .article-grid tr { display: block; }
+      .article-grid td { display: block; width: 100%; }
+      .article-grid { margin: 0; width: 100%; border-spacing: 0; }
+      .article-grid td + td { padding-top: 10px; }
+      .grid-spacer { display: none; }
     }
   </style>
 </head>
 <body>
-  <div class="wrapper">
-    <!-- Header -->
-    <div class="header">
-      <h1>UX Weekly Digest</h1>
-      <p>Week of {{ week_date }}</p>
+  <div class="email-wrapper">
+
+    <!-- HEADER -->
+    <div class="email-header">
+      <div class="email-header-inner">
+        <div class="email-title">UX Weekly Digest<span class="email-title-dot">.</span></div>
+        <div class="email-date">{{ week_date }}</div>
+      </div>
     </div>
 
-    <!-- One-liner banner -->
-    <div class="one-liner">{{ one_liner }}</div>
+    <!-- BODY -->
+    <div class="email-body">
 
-    <!-- Article cards -->
-    <div style="background-color:#ffffff; padding: 16px;">
-      <table class="card-grid" cellpadding="0" cellspacing="0" width="100%">
-        {% for i in range(0, articles|length, 2) %}
-        <tr class="card-row">
-          {% for article in articles[i:i+2] %}
-          <td class="card-cell">
-            <div class="card">
-              {% if article.thumbnail_url %}
-                <img class="card-img" src="{{ article.thumbnail_url }}" alt="" />
-              {% else %}
-                <!-- Gradient placeholder with pixel monster (ZDS teal-50 → teal-80) -->
-                <div class="card-img-placeholder">
-                  <svg width="56" height="56" viewBox="0 0 8 8" xmlns="http://www.w3.org/2000/svg" style="image-rendering: pixelated; image-rendering: crisp-edges;">
-                    <!-- Antennae -->
-                    <rect x="1" y="0" width="1" height="1" fill="#E9F4F5"/>
-                    <rect x="6" y="0" width="1" height="1" fill="#E9F4F5"/>
-                    <!-- Antenna stems -->
-                    <rect x="2" y="1" width="1" height="1" fill="#9FCED3"/>
-                    <rect x="5" y="1" width="1" height="1" fill="#9FCED3"/>
-                    <!-- Head row -->
-                    <rect x="1" y="2" width="6" height="1" fill="#CEE6E8"/>
-                    <!-- Eyes row — white eye highlights on teal body -->
-                    <rect x="0" y="3" width="2" height="1" fill="#CEE6E8"/>
-                    <rect x="2" y="3" width="1" height="1" fill="#ffffff"/>
-                    <rect x="3" y="3" width="2" height="1" fill="#CEE6E8"/>
-                    <rect x="5" y="3" width="1" height="1" fill="#ffffff"/>
-                    <rect x="6" y="3" width="2" height="1" fill="#CEE6E8"/>
-                    <!-- Body row -->
-                    <rect x="0" y="4" width="8" height="1" fill="#CEE6E8"/>
-                    <!-- Mouth row -->
-                    <rect x="1" y="5" width="1" height="1" fill="#9FCED3"/>
-                    <rect x="3" y="5" width="2" height="1" fill="#9FCED3"/>
-                    <rect x="6" y="5" width="1" height="1" fill="#9FCED3"/>
-                    <!-- Outer legs -->
-                    <rect x="0" y="6" width="1" height="1" fill="#E9F4F5"/>
-                    <rect x="7" y="6" width="1" height="1" fill="#E9F4F5"/>
-                    <!-- Feet -->
-                    <rect x="1" y="7" width="1" height="1" fill="#E9F4F5"/>
-                    <rect x="6" y="7" width="1" height="1" fill="#E9F4F5"/>
-                  </svg>
-                </div>
-              {% endif %}
-              <div class="card-body">
-                <p class="card-title"><a href="{{ article.url }}">{{ article.title }}</a></p>
-                <p class="card-summary">{{ article.summary }}</p>
-                {% if article.published_date %}
-                  <p class="card-date">{{ article.published_date }}</p>
+      <!-- ONE-LINER -->
+      <div class="one-liner">
+        <p>{{ one_liner }}</p>
+      </div>
+
+      <!-- SECTION HEADING -->
+      <div class="section-heading">This Week&rsquo;s Stories</div>
+
+      <!-- ARTICLE GRID -->
+      <table class="article-grid" role="presentation" cellpadding="0" cellspacing="0">
+        <tbody>
+          {% for i in range(0, articles|length, 2) %}
+          <tr>
+            {% for article in articles[i:i+2] %}
+            <td>
+              <a href="{{ article.url }}" class="card">
+                {% if article.thumbnail_url %}
+                  <img class="card-img" src="{{ article.thumbnail_url }}" alt="" />
+                {% else %}
+                  <div class="card-thumbnail">
+                    <svg width="56" height="56" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
+                      <rect x="1" y="0" width="1" height="1" fill="#CEE6E8"/>
+                      <rect x="6" y="0" width="1" height="1" fill="#CEE6E8"/>
+                      <rect x="2" y="1" width="4" height="1" fill="#9FCED3"/>
+                      <rect x="1" y="2" width="6" height="1" fill="#9FCED3"/>
+                      <rect x="2" y="2" width="1" height="1" fill="#E9F4F5"/>
+                      <rect x="5" y="2" width="1" height="1" fill="#E9F4F5"/>
+                      <rect x="1" y="3" width="6" height="1" fill="#9FCED3"/>
+                      <rect x="2" y="3" width="1" height="1" fill="#CEE6E8"/>
+                      <rect x="5" y="3" width="1" height="1" fill="#CEE6E8"/>
+                      <rect x="1" y="4" width="6" height="1" fill="#9FCED3"/>
+                      <rect x="2" y="4" width="1" height="1" fill="#CEE6E8"/>
+                      <rect x="4" y="4" width="1" height="1" fill="#CEE6E8"/>
+                      <rect x="2" y="5" width="4" height="1" fill="#9FCED3"/>
+                      <rect x="1" y="6" width="2" height="1" fill="#9FCED3"/>
+                      <rect x="5" y="6" width="2" height="1" fill="#9FCED3"/>
+                      <rect x="1" y="7" width="1" height="1" fill="#CEE6E8"/>
+                      <rect x="6" y="7" width="1" height="1" fill="#CEE6E8"/>
+                    </svg>
+                  </div>
                 {% endif %}
-              </div>
-            </div>
-          </td>
-          {% endfor %}
-          {% if articles[i:i+2]|length == 1 %}
-          <td class="card-cell"></td>
+                <div class="card-content">
+                  {% if article.published_date %}
+                  <span class="card-date">{{ article.published_date }}</span>
+                  {% endif %}
+                  <div class="card-title">{{ article.title }}</div>
+                  <p class="card-summary">{{ article.summary }}</p>
+                </div>
+              </a>
+            </td>
+            {% endfor %}
+            {% if articles[i:i+2]|length == 1 %}
+            <td></td>
+            {% endif %}
+          </tr>
+          {% if not loop.last %}
+          <tr><td colspan="2" class="grid-spacer"></td></tr>
           {% endif %}
-        </tr>
-        {% endfor %}
+          {% endfor %}
+        </tbody>
       </table>
+
+    </div>
+    <!-- END BODY -->
+
+    <!-- FOOTER -->
+    <div class="email-footer">
+      <div class="footer-brand">UX Weekly Digest</div>
+      <p class="footer-copy">
+        You&rsquo;re receiving this because you subscribed to Gobby UX Weekly Digest.<br />
+        Sent weekly every Friday.
+      </p>
+      <p class="footer-unsubscribe">
+        <a href="mailto:{{ sender_email | default('the admin') }}">Unsubscribe</a>
+      </p>
     </div>
 
-    <!-- Footer -->
-    <div class="footer">
-      You're receiving this because you're on the UX Weekly Digest list.<br>
-      To unsubscribe, contact <a href="mailto:{{ sender_email | default('the admin') }}">the admin</a>.
-    </div>
   </div>
 </body>
 </html>

@@ -34,7 +34,7 @@ def main():
     one_liner = generate_one_liner(articles)
     logger.info("One-liner: %s", one_liner)
 
-    week_date = date.today().strftime("%B %d, %Y")
+    week_date = date.today().strftime("%d %B %Y")
     subject = f"UX Weekly Digest — Week of {week_date}"
 
     logger.info("Building email...")
