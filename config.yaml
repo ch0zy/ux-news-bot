@@ -1,6 +1,6 @@
 schedule:
-  day: Friday
-  time_utc: "01:00"   # 9:00am UTC+8
+  day: Monday
+  time_utc: "18:18"   # 9:00am UTC+8
 
 # Queries are constrained to the past 7 days via Tavily's `days` parameter.
 # Keep queries broad enough within the UX domain to guarantee ≥2 results each.
