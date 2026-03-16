@@ -3,10 +3,18 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 
 
+def _truncate_words(text: str, n: int) -> str:
+    words = text.split()
+    if len(words) <= n:
+        return text
+    return " ".join(words[:n]) + "\u2026"
+
+
 def build_email(one_liner: str, articles: list[dict], week_date: str) -> str:
     """Render the HTML email from the Jinja2 template."""
     templates_dir = Path(__file__).parent.parent / "templates"
     env = Environment(loader=FileSystemLoader(str(templates_dir)))
+    env.filters["truncate_words"] = _truncate_words
     template = env.get_template("digest.html.j2")
 
     return template.render(

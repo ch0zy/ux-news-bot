@@ -1,9 +1,29 @@
 import logging
 import os
+from datetime import datetime
+from email.utils import parsedate
 
 from tavily import TavilyClient
 
 logger = logging.getLogger(__name__)
+
+
+def _format_date(raw: str) -> str:
+    """Parse any Tavily date string and return 'DD Mon YYYY', or raw on failure."""
+    if not raw:
+        return ""
+    try:
+        parsed = parsedate(raw)
+        if parsed:
+            return datetime(*parsed[:3]).strftime("%-d %b %Y")
+    except Exception:
+        pass
+    # Try ISO format (e.g. "2026-03-11")
+    try:
+        return datetime.strptime(raw[:10], "%Y-%m-%d").strftime("%-d %b %Y")
+    except Exception:
+        pass
+    return raw
 
 
 def fetch_news(config: dict) -> list[dict]:
@@ -44,7 +64,7 @@ def fetch_news(config: dict) -> list[dict]:
                 "title": result.get("title", ""),
                 "url": url,
                 "content": result.get("content", ""),
-                "published_date": result.get("published_date", ""),
+                "published_date": _format_date(result.get("published_date", "")),
             }
             articles.append(article)
             new_for_query.append(article)
