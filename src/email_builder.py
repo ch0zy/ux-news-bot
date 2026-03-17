@@ -32,14 +32,14 @@ if __name__ == "__main__":
             "url": "https://example.com/article1",
             "summary": "AI tools are transforming how governments design citizen-facing services.",
             "thumbnail_url": None,
-            "published_date": "2026-03-07",
+            "published_date": "7 Mar 2026",
         },
         {
             "title": "Top UX research tools of 2026",
             "url": "https://example.com/article2",
             "summary": "New tools are making usability testing faster and more accessible.",
             "thumbnail_url": "https://placehold.co/600x150",
-            "published_date": "2026-03-06",
+            "published_date": "6 Mar 2026",
         },
     ]
     html = build_email(
