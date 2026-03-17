@@ -1,9 +1,42 @@
 import logging
 import os
+import re
+from datetime import datetime
+from email.utils import parsedate
 
 from tavily import TavilyClient
 
 logger = logging.getLogger(__name__)
+
+
+def _format_date(raw: str) -> str:
+    """Parse any Tavily date string and return 'D Mon YYYY', or raw on failure."""
+    if not raw:
+        return ""
+    # RFC 2822 e.g. "Wed, 11 Mar 2026 15:28:43 GMT"
+    try:
+        parsed = parsedate(raw)
+        if parsed:
+            return datetime(*parsed[:3]).strftime("%-d %b %Y")
+    except Exception:
+        pass
+    # ISO format e.g. "2026-03-11" or "2026-03-11T15:28:43Z"
+    try:
+        return datetime.strptime(raw[:10], "%Y-%m-%d").strftime("%-d %b %Y")
+    except Exception:
+        pass
+    return raw
+
+
+def _strip_source(title: str) -> str:
+    """Remove trailing ' - Source Name' or ' | Source Name' appended by Tavily."""
+    # Only strip if the trailing segment after ' - ' / ' | ' is ≤4 words (source name)
+    match = re.match(r'^(.*?)\s+[-–|]\s+([\w][\w\s.&]{0,40})$', title)
+    if match:
+        source_part = match.group(2).strip()
+        if len(source_part.split()) <= 4:
+            return match.group(1).strip()
+    return title
 
 
 def fetch_news(config: dict) -> list[dict]:
@@ -41,10 +74,10 @@ def fetch_news(config: dict) -> list[dict]:
                 continue
             seen_urls.add(url)
             article = {
-                "title": result.get("title", ""),
+                "title": _strip_source(result.get("title", "")),
                 "url": url,
                 "content": result.get("content", ""),
-                "published_date": result.get("published_date", ""),
+                "published_date": _format_date(result.get("published_date", "")),
             }
             articles.append(article)
             new_for_query.append(article)
