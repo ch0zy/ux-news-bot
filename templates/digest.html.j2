@@ -224,12 +224,12 @@
                     </svg>
                   </div>
                 {% endif %}
-                <div class="card-content">
+                <div class="card-content" style="padding:14px 15px 16px;">
                   {% if article.published_date %}
-                  <span class="card-date">{{ article.published_date }}</span>
+                  <span class="card-date" style="display:block;font-size:11px;color:#6BB3BA;margin-bottom:6px;">{{ article.published_date }}</span>
                   {% endif %}
-                  <div class="card-title">{{ article.title | truncate_words(15) }}</div>
-                  <p class="card-summary">{{ article.summary | truncate_words(20) }}</p>
+                  <div class="card-title" style="display:block;font-size:14px;font-weight:600;color:#E9F4F5;line-height:1.4;margin-bottom:8px;">{{ article.title | truncate_words(15) }}</div>
+                  <p class="card-summary" style="font-size:13px;color:#9FCED3;line-height:1.6;margin:0;">{{ article.summary | truncate_words(20) }}</p>
                 </div>
               </a>
             </td>

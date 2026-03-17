@@ -42,4 +42,6 @@ def generate_one_liner(articles: list[dict]) -> str:
         max_tokens=80,
         messages=[{"role": "user", "content": prompt}],
     )
-    return response.content[0].text.strip()
+    # Strip any leading markdown heading markers the model occasionally emits
+    text = response.content[0].text.strip()
+    return text.lstrip('#').strip()
