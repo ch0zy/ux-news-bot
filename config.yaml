@@ -5,7 +5,7 @@ schedule:
 # Queries are constrained to the past 7 days via Tavily's `days` parameter.
 # Keep queries broad enough within the UX domain to guarantee ≥2 results each.
 search_queries:
-  - "UX design user research trends tools news"                   # broad weekly pulse
+  - "UX design graphic design trends tools news"                  # broad weekly pulse
   - "AI product design user experience"                           # AI × UX intersection
   - "government public sector service design"                     # gov UX
 
