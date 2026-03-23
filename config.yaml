@@ -5,11 +5,12 @@ schedule:
 # Queries are constrained to the past 7 days via Tavily's `days` parameter.
 # Keep queries broad enough within the UX domain to guarantee ≥2 results each.
 search_queries:
-  - "UX design graphic design trends tools news"                  # broad weekly pulse
-  - "AI product design user experience"                           # AI × UX intersection
-  - "government public sector service design"                     # gov UX
+  - "UX design tools news"                       # UX weekly pulse
+  - "graphic design trends"                      # graphic design weekly pulse
+  - "AI product design user experience"          # AI × UX intersection
+  - "government public sector service design"    # gov UX
 
-results_per_query: 7   # fetch 7 per query (35 total) → dedup → top 10
+results_per_query: 2   # fetch 2 per query (8 total) → dedup → top 8
 min_results_per_query: 2   # warn if a query returns fewer than this
 max_articles: 8
 summary_max_words: 20
