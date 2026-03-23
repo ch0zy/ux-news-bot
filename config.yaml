@@ -10,7 +10,7 @@ search_queries:
   - "AI product design user experience"          # AI × UX intersection
   - "government public sector service design"    # gov UX
 
-results_per_query: 2   # fetch 2 per query (8 total) → dedup → top 8
+results_per_query: 3   # fetch 3 per query (12 total) → dedup → top 8
 min_results_per_query: 2   # warn if a query returns fewer than this
 max_articles: 8
 summary_max_words: 20
